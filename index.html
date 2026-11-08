@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ko" data-theme="ink">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>사주 만세력</title>
+  <meta name="description" content="생년월일시로 사주팔자, 오행, 십성, 일간 성향, 대운·세운·오늘의 운세, 궁합을 풀이합니다." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    try { var t = localStorage.getItem("ssaju:theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="theme-bar" role="toolbar" aria-label="디자인 시안 선택">
+    <span class="theme-bar-label">디자인 시안</span>
+    <button type="button" class="theme-btn" data-theme-set="ink"><b>A</b> 묵향 <small>전통 한지</small></button>
+    <button type="button" class="theme-btn" data-theme-set="night"><b>B</b> 성운 <small>밤하늘</small></button>
+    <button type="button" class="theme-btn" data-theme-set="fresh"><b>C</b> 산뜻 <small>모던</small></button>
+  </div>
+
+  <nav class="topnav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="wordmark"><span class="seal">命</span><span class="wm-text">사주 만세력</span></a>
+      <div class="nav-links">
+        <a href="#input" data-mode-link="saju">사주풀이</a>
+        <a href="#input" data-mode-link="gunghap">궁합</a>
+        <a href="#glossary">용어사전</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">四柱八字 · 命理</p>
+        <h1>태어난 순간에 새겨진<br /><em>여덟 글자</em>의 이야기</h1>
+        <p class="lede">생년월일시로 네 기둥을 세우고 타고난 기질과 오행의 균형, 십 년마다 바뀌는 대운과 올해·오늘의 운세까지 풀어드립니다. 두 사람의 궁합도 볼 수 있습니다.</p>
+        <div class="hero-actions">
+          <a href="#input" class="btn btn-primary" data-mode-link="saju">내 사주 보기</a>
+          <a href="#input" class="btn btn-ghost" data-mode-link="gunghap">궁합 보기</a>
+        </div>
+        <ul class="hero-feats">
+          <li>만세력 원국</li><li>일간 성향</li><li>오행·십성</li><li>대운·세운</li><li>오늘의 운세</li><li>궁합</li>
+        </ul>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="wheel">
+          <span style="--i:0">子</span><span style="--i:1">丑</span><span style="--i:2">寅</span><span style="--i:3">卯</span>
+          <span style="--i:4">辰</span><span style="--i:5">巳</span><span style="--i:6">午</span><span style="--i:7">未</span>
+          <span style="--i:8">申</span><span style="--i:9">酉</span><span style="--i:10">戌</span><span style="--i:11">亥</span>
+          <div class="wheel-core">命</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="input" class="section">
+    <div class="wrap">
+      <div class="mode-tabs" role="tablist">
+        <button type="button" class="mode-tab active" data-mode="saju" role="tab">내 사주</button>
+        <button type="button" class="mode-tab" data-mode="gunghap" role="tab">궁합</button>
+      </div>
+      <form id="form" class="panel form" autocomplete="off" novalidate>
+        <div class="persons">
+          <div class="person" data-person="a"></div>
+          <div class="person person-b" data-person="b" hidden></div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">사주 풀이 보기</button>
+        <p class="hint center">입력한 정보는 이 브라우저 밖으로 전송되지 않습니다.</p>
+        <p id="error" class="error" role="alert"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- 사주 풀이 결과 -->
+  <div id="result" hidden>
+    <div class="subnav-wrap">
+      <nav class="wrap subnav" aria-label="풀이 목차">
+        <a href="#s-pillars">원국</a><a href="#s-elements">오행</a><a href="#s-daymaster">성향</a><a href="#s-tengods">십성</a>
+        <a href="#s-sals">신살</a><a href="#s-luck">개운</a><a href="#s-daeun">대운</a><a href="#s-year">올해</a><a href="#s-today">오늘</a><a href="#s-text">원문</a>
+      </nav>
+    </div>
+
+    <section class="section" id="s-pillars">
+      <div class="wrap">
+        <div id="profile" class="panel profile"></div>
+        <div class="sec-head"><p class="eyebrow">四柱原局</p><h2>사주 원국</h2><p class="sec-desc">네 기둥의 윗줄은 하늘의 기운(천간), 아랫줄은 땅의 기운(지지)입니다. 가운데 일간이 바로 '나'입니다.</p></div>
+        <div id="pillars" class="pillars"></div>
+        <p id="unknown-note" class="hint" hidden>태어난 시간을 몰라 시주(時柱)는 비워두었습니다. 오행과 십성 분포도 여섯 글자를 기준으로 계산했습니다.</p>
+        <div id="relations" class="panel relations"></div>
+      </div>
+    </section>
+
+    <section class="section alt" id="s-elements">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">五行</p><h2>오행의 균형</h2><p class="sec-desc">여덟 글자에 담긴 나무·불·흙·쇠·물의 비율입니다. 넘치는 기운은 덜어내고 부족한 기운은 채우는 것이 개운의 기본입니다.</p></div>
+        <div class="grid2">
+          <div class="panel"><div id="elements" class="elements"></div><div id="yinyang" class="yinyang"></div></div>
+          <div id="element-read" class="element-read"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="s-daymaster">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">日干</p><h2>타고난 성향</h2></div>
+        <div id="daymaster" class="daymaster"></div>
+      </div>
+    </section>
+
+    <section class="section alt" id="s-tengods">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">十星</p><h2>십성으로 본 나의 에너지</h2><p class="sec-desc">일간을 기준으로 다른 일곱 글자가 어떤 관계인지 나타냅니다. 많은 십성은 내가 잘 쓰는 힘, 없는 십성은 채워야 할 힘입니다.</p></div>
+        <div class="grid2">
+          <div class="panel"><div id="tengod-groups" class="tg-groups"></div></div>
+          <div id="tengod-read" class="tg-read"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="s-sals">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">神殺 · 十二運星</p><h2>신살과 12운성</h2><p class="sec-desc">신살은 특별한 별자리처럼 붙는 보조 해석입니다. 흉살도 잘 쓰면 재능이 됩니다.</p></div>
+        <div class="grid2">
+          <div id="sals" class="sal-list"></div>
+          <div id="stages" class="panel stage-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="s-luck">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">格局 · 用神</p><h2>격국 · 용신과 개운법</h2></div>
+        <div id="yongsin" class="yongsin"></div>
+      </div>
+    </section>
+
+    <section class="section" id="s-daeun">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">大運</p><h2>10년마다 바뀌는 대운</h2><p id="daeun-note" class="sec-desc"></p></div>
+        <div id="daeun-now" class="panel callout"></div>
+        <div id="daeun" class="flow"></div>
+      </div>
+    </section>
+
+    <section class="section alt" id="s-year">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">歲運 · 月運</p><h2>올해와 내년의 운세</h2></div>
+        <div id="year-cards" class="grid2"></div>
+        <h3 class="sub-title">연도별 흐름</h3>
+        <div id="seyun" class="flow small"></div>
+        <h3 class="sub-title">월별 흐름</h3>
+        <div id="wolun" class="flow small"></div>
+      </div>
+    </section>
+
+    <section class="section" id="s-today">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">日辰</p><h2>오늘과 내일의 운세</h2></div>
+        <div id="today-cards" class="grid2"></div>
+      </div>
+    </section>
+
+    <section class="section alt" id="s-text">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">原文</p><h2>만세력 원문</h2><p class="sec-desc">이 텍스트를 복사해 AI 상담에 붙여 넣으면 더 깊은 풀이를 받아볼 수 있습니다.</p></div>
+        <div class="tabs">
+          <button type="button" class="tab active" data-fmt="compact">간단 (AI용)</button>
+          <button type="button" class="tab" data-fmt="markdown">마크다운</button>
+          <span class="tabs-spacer"></span>
+          <button type="button" id="copy" class="btn btn-ghost btn-sm">복사</button>
+          <button type="button" id="print" class="btn btn-ghost btn-sm">인쇄 · PDF</button>
+        </div>
+        <pre id="text"></pre>
+      </div>
+    </section>
+  </div>
+
+  <!-- 궁합 결과 -->
+  <div id="gh-result" hidden>
+    <section class="section">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">宮合</p><h2>두 사람의 궁합</h2></div>
+        <div id="gh-body"></div>
+      </div>
+    </section>
+  </div>
+
+  <section id="glossary" class="section alt">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">用語</p><h2>사주 용어사전</h2><p class="sec-desc">풀이에 나오는 낯선 말들을 쉽게 정리했습니다.</p></div>
+      <div id="glossary-list" class="accordion"></div>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">FAQ</p><h2>자주 묻는 질문</h2></div>
+      <div id="faq-list" class="accordion"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p class="foot-mark"><span class="seal">命</span> 사주 만세력</p>
+      <p>사주 계산 엔진: <a href="https://github.com/golbin/ssaju" target="_blank" rel="noopener">golbin/ssaju</a> (MIT). 1900–2099년 출생을 지원하며 입춘·절기 기준으로 계산합니다.</p>
+      <p>이 서비스의 풀이는 전통 명리학 해석을 바탕으로 한 참고용 콘텐츠입니다. 건강·투자·법률 등 중요한 결정은 전문가와 상의하세요.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
